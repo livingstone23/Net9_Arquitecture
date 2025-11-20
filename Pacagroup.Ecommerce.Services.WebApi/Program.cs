@@ -1,3 +1,4 @@
+﻿using Microsoft.AspNetCore.Cors.Infrastructure;
 using Pacagroup.Ecommerce.Application.Main;
 using Pacagroup.Ecommerce.Domain.Core;
 using Pacagroup.Ecommerce.Infrastructure.Repository;
@@ -6,6 +7,22 @@ using Pacagroup.Ecommerce.Services.WebApi.Modules.Swagger;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+
+const string MyCorsPolicy = "MyCorsPolicy";
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(MyCorsPolicy, corsBuilder =>
+    {
+        corsBuilder
+            .WithOrigins(builder.Configuration["Config:OriginCors"]!) // ej: "https://midominio.com"
+            .AllowAnyHeader()
+            .AllowAnyMethod();
+        // .AllowCredentials(); // solo si lo necesitas
+    });
+});
+
+
 
 builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
@@ -29,7 +46,7 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    // Generar documentaci�n JSON de Swagger
+    // Generar documentación JSON de Swagger
     app.UseSwagger();
 
     // Habilitar interfaz interactiva de usuario de Swagger
@@ -44,6 +61,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseCors(MyCorsPolicy); // ⬅️ Politica de cors
 
 app.UseAuthorization();
 
