@@ -1,5 +1,6 @@
 ﻿using System.Security.Claims;
 using System.Text;
+using Microsoft.Extensions.Configuration;
 using Pacagroup.Ecommerce.Domain.Entity;
 
 
@@ -8,8 +9,12 @@ namespace Pacagroup.Ecommerce.Tranversal.Common;
 
 
 
+/// <summary>
+/// Clase para la generación de tokens JWT
+/// </summary>
 public class JwtService : IJwtService
 {
+
     private readonly IConfiguration _configuration;
 
     public JwtService(IConfiguration configuration)

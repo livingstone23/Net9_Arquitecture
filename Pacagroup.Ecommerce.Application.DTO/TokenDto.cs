@@ -1,6 +1,12 @@
 ﻿namespace Pacagroup.Ecommerce.Application.DTO;
 
-public class TokenDto
+
+
+public sealed record TokenDto
 {
-    
+
+    public string AccessToken { get; set; } = string.Empty;
+    public string TokenType { get; set; } = "Bearer";
+    public int ExpiresIn { get; set; }
+
 }
