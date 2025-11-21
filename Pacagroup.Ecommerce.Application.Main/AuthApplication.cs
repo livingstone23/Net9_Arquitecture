@@ -5,10 +5,18 @@ using Pacagroup.Ecommerce.Domain.Entity;
 using Pacagroup.Ecommerce.Domain.Interface;
 using Pacagroup.Ecommerce.Tranversal.Common;
 
+
+
 namespace Pacagroup.Ecommerce.Application.Main;
 
+
+
+/// <summary>
+/// Clase que implementa los métodos de la aplicación para la autenticación
+/// </summary>
 public class AuthApplication : IAuthApplication
 {
+
     private readonly IUsersDomain _usersDomain;
     private readonly IJwtService _jwtService;
     private readonly IMapper _mapper;

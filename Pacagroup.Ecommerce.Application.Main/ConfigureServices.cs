@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Pacagroup.Ecommerce.Application.Interface;
 using System.Reflection;
-
+using Pacagroup.Ecommerce.Tranversal.Common;
 
 
 namespace Pacagroup.Ecommerce.Application.Main;
@@ -23,15 +23,20 @@ public static class ConfigureServices
     {
 
         services.AddScoped<ICustomersApplication, CustomersApplication>();
-        //services.AddAutoMapper(Assembly.GetExecutingAssembly());
 
+        services.AddScoped<IAuthApplication, AuthApplication>();
+        services.AddScoped<IJwtService, JwtService>();
+
+        
+        //services.AddAutoMapper(Assembly.GetExecutingAssembly());
         services.AddAutoMapper(
             cfg => { /* aquí puedes añadir profiles manualmente si quieres */ },
             Assembly.GetExecutingAssembly()
         );
+        
 
         return services;
-    
+        
     }
 
 }

@@ -28,5 +28,10 @@ public class MappingsProfile : Profile
         //.ForMember(destination => destination.Country, source => source.MapFrom(src => src.Country))
         //.ForMember(destination => destination.Phone, source => source.MapFrom(src => src.Phone))
         //.ForMember(destination => destination.Fax, source => source.MapFrom(src => src.Fax)).ReverseMap();
+
+
+        CreateMap<User, SignUpDto>().ReverseMap();
+
+
     }
 }

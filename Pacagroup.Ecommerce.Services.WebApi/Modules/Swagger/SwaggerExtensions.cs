@@ -1,6 +1,6 @@
 ﻿using Microsoft.OpenApi.Models;
 using System.Reflection;
-
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 
 namespace Pacagroup.Ecommerce.Services.WebApi.Modules.Swagger;
@@ -44,7 +44,30 @@ public static class SwaggerExtensions
             var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
 
             c.IncludeXmlComments(xmlPath);
-            
+
+
+            var securityScheme = new OpenApiSecurityScheme
+            {
+                Name = "Authorization",
+                Description = "Enter JWT Bearer token **_only_**",
+                In = ParameterLocation.Header,
+                Type = SecuritySchemeType.Http,
+                Scheme = "bearer",
+                BearerFormat = "JWT",
+                Reference = new OpenApiReference
+                {
+                    Id = JwtBearerDefaults.AuthenticationScheme,
+                    Type = ReferenceType.SecurityScheme
+                }
+            };
+
+            c.AddSecurityDefinition(securityScheme.Reference.Id, securityScheme);
+
+            c.AddSecurityRequirement(new OpenApiSecurityRequirement
+            {
+                { securityScheme, new List<string>() { } }
+            });
+
             /// Habilitar anotaciones
             c.EnableAnnotations();
         });

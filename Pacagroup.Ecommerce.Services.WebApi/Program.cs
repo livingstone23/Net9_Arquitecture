@@ -2,6 +2,7 @@
 using Pacagroup.Ecommerce.Application.Main;
 using Pacagroup.Ecommerce.Domain.Core;
 using Pacagroup.Ecommerce.Infrastructure.Repository;
+using Pacagroup.Ecommerce.Services.WebApi.Modules.Authentication;
 using Pacagroup.Ecommerce.Services.WebApi.Modules.Swagger;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -34,6 +35,10 @@ builder.Services.AddOpenApi();
 builder.Services.AddDomainServices();
 builder.Services.AddInfrastructureServices();
 builder.Services.AddApplicationServices();
+
+//Agregamos el metodo extension para seguridad
+builder.Services.AddAuth(builder.Configuration);
+
 builder.Services.AddSwagger();
 
 
@@ -63,6 +68,11 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseCors(MyCorsPolicy); // ⬅️ Politica de cors
+
+
+// Agregamos el middleware de autenticación
+app.UseAuthentication();
+
 
 app.UseAuthorization();
 
