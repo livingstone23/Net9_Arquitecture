@@ -11,10 +11,16 @@ namespace Pacagroup.Ecommerce.Infrastructure.Repository;
 /// </summary>
 public class UnitOfWork: IUnitOfWork
 {
+    
 
-    public UnitOfWork(ICustomersRepository customers)
+    public ICustomersRepository Customers { get; }
+    public IUsersRepository Users { get; }
+
+
+    public UnitOfWork(ICustomersRepository customers, IUsersRepository users)
     {
         Customers = customers;
+        Users = users;
     }
 
     public void Dispose()
@@ -22,6 +28,5 @@ public class UnitOfWork: IUnitOfWork
         System.GC.SuppressFinalize(this);
     }
 
-    public ICustomersRepository Customers { get; }
-
+    
 }
