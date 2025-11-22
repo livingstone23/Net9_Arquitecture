@@ -1,11 +1,26 @@
 <Project Sdk="MSTest.Sdk/3.6.4">
 
-  <PropertyGroup>
-    <TargetFramework>net9.0</TargetFramework>
-    <LangVersion>latest</LangVersion>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
-    <UseVSTest>true</UseVSTest>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFramework>net9.0</TargetFramework>
+		<LangVersion>latest</LangVersion>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+		<UseVSTest>true</UseVSTest>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Microsoft.Extensions.Configuration" Version="9.0.11" />
+		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.11" />
+		<PackageReference Include="Moq" Version="4.20.72" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\Pacagroup.Ecommerce.Application.Main\Pacagroup.Ecommerce.Application.Main.csproj" />
+		<ProjectReference Include="..\Pacagroup.Ecommerce.Application.DTO\Pacagroup.Ecommerce.Application.DTO.csproj" />
+		<ProjectReference Include="..\Pacagroup.Ecommerce.Application.Validator\Pacagroup.Ecommerce.Application.Validator.csproj" />
+		<ProjectReference Include="..\Pacagroup.Ecommerce.Domain.Interface\Pacagroup.Ecommerce.Domain.Interface.csproj" />
+		<ProjectReference Include="..\Pacagroup.Ecommerce.Tranversal.Common\Pacagroup.Ecommerce.Tranversal.Common.csproj" />
+		<ProjectReference Include="..\Pacagroup.Ecommerce.Tranversal.Logging\Pacagroup.Ecommerce.Tranversal.Logging.csproj" />
+	</ItemGroup>
 
 </Project>
