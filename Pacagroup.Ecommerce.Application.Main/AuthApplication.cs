@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Pacagroup.Ecommerce.Application.DTO;
 using Pacagroup.Ecommerce.Application.Interface;
+using Pacagroup.Ecommerce.Application.Validator;
 using Pacagroup.Ecommerce.Domain.Entity;
 using Pacagroup.Ecommerce.Domain.Interface;
 using Pacagroup.Ecommerce.Tranversal.Common;
@@ -21,13 +22,16 @@ public class AuthApplication : IAuthApplication
     private readonly IJwtService _jwtService;
     private readonly IMapper _mapper;
     private readonly IAppLogger<AuthApplication> _logger;
+    private readonly SignUpDtoValidator _signUpDtoValidator;
 
-    public AuthApplication(IUsersDomain usersDomain, IJwtService jwtService, IMapper mapper, IAppLogger<AuthApplication> logger)
+
+    public AuthApplication(IUsersDomain usersDomain, IJwtService jwtService, IMapper mapper, IAppLogger<AuthApplication> logger, SignUpDtoValidator signUpDtoValidator)
     {
         _usersDomain = usersDomain;
         _jwtService = jwtService;
         _mapper = mapper;
         _logger = logger;
+        _signUpDtoValidator = signUpDtoValidator;
     }
 
     public async Task<Response<TokenDto>> SignInAsync(SignInDto signInDto)
@@ -74,6 +78,16 @@ public class AuthApplication : IAuthApplication
         var response = new Response<bool>();
         try
         {
+
+            // Validar el DTO de registro
+            var validationResult = _signUpDtoValidator.Validate(signUpDto);
+            if (!validationResult.IsValid)
+            {
+                response.Message = "Errores de Validación";
+                response.Errors = validationResult.Errors;
+                return response;
+            }
+
 
             var existingUser = await _usersDomain.GetByEmailAsync(signUpDto.Email);
             if (existingUser != null)

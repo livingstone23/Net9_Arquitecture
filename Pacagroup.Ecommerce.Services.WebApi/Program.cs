@@ -3,6 +3,7 @@ using Pacagroup.Ecommerce.Domain.Core;
 using Pacagroup.Ecommerce.Infrastructure.Repository;
 using Pacagroup.Ecommerce.Services.WebApi.Modules.Authentication;
 using Pacagroup.Ecommerce.Services.WebApi.Modules.Swagger;
+using Pacagroup.Ecommerce.Services.WebApi.Validator;
 using Pacagroup.Ecommerce.Tranversal.Logging;
 using Serilog;
 
@@ -46,6 +47,10 @@ builder.Services.AddAuth(builder.Configuration);
 
 // Swagger (config de módulos)
 builder.Services.AddSwagger();
+
+
+// Habilito el llamado al fluent validation
+builder.Services.AddValidator();
 
 var app = builder.Build();
 

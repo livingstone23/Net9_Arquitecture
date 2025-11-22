@@ -1,9 +1,18 @@
-﻿namespace Pacagroup.Ecommerce.Services.WebApi.Validator;
+﻿using Pacagroup.Ecommerce.Application.Validator;
+
+
+
+namespace Pacagroup.Ecommerce.Services.WebApi.Validator;
+
+
 
 public static class ValidatorExtensions
 {
     public static IServiceCollection AddValidator(this IServiceCollection services)
     {
-        services.AddTransient<>();
+        services.AddTransient<SignUpDtoValidator>();
+
+
+        return services;
     }
 }
