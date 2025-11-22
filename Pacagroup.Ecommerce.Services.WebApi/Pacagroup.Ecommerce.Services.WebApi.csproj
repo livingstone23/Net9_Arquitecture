@@ -5,11 +5,14 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
+    <UserSecretsId>a1fafcf7-4cf3-41e0-934e-de6b0463bea9</UserSecretsId>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="9.0.11" />
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.11" />
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.22.1" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="9.0.6" />
     <PackageReference Include="Swashbuckle.AspNetCore.Annotations" Version="9.0.6" />
   </ItemGroup>
@@ -20,6 +23,7 @@
     <ProjectReference Include="..\Pacagroup.Ecommerce.Application.Main\Pacagroup.Ecommerce.Application.Main.csproj" />
     <ProjectReference Include="..\Pacagroup.Ecommerce.Domain.Core\Pacagroup.Ecommerce.Domain.Core.csproj" />
     <ProjectReference Include="..\Pacagroup.Ecommerce.Infrastructure.Repository\Pacagroup.Ecommerce.Infrastructure.Repository.csproj" />
+    <ProjectReference Include="..\Pacagroup.Ecommerce.Tranversal.Logging\Pacagroup.Ecommerce.Tranversal.Logging.csproj" />
   </ItemGroup>
 
 </Project>

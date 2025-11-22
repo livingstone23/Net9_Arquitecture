@@ -16,6 +16,7 @@
     <ProjectReference Include="..\Pacagroup.Ecommerce.Domain.Entity\Pacagroup.Ecommerce.Domain.Entity.csproj" />
     <ProjectReference Include="..\Pacagroup.Ecommerce.Domain.Interface\Pacagroup.Ecommerce.Domain.Interface.csproj" />
     <ProjectReference Include="..\Pacagroup.Ecommerce.Tranversal.Common\Pacagroup.Ecommerce.Tranversal.Common.csproj" />
+    <ProjectReference Include="..\Pacagroup.Ecommerce.Tranversal.Logging\Pacagroup.Ecommerce.Tranversal.Logging.csproj" />
   </ItemGroup>
 
 </Project>

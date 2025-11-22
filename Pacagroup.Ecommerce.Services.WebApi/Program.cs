@@ -1,9 +1,10 @@
-﻿using Microsoft.AspNetCore.Cors.Infrastructure;
-using Pacagroup.Ecommerce.Application.Main;
+﻿using Pacagroup.Ecommerce.Application.Main;
 using Pacagroup.Ecommerce.Domain.Core;
 using Pacagroup.Ecommerce.Infrastructure.Repository;
 using Pacagroup.Ecommerce.Services.WebApi.Modules.Authentication;
 using Pacagroup.Ecommerce.Services.WebApi.Modules.Swagger;
+using Pacagroup.Ecommerce.Tranversal.Logging;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,71 +12,91 @@ var builder = WebApplication.CreateBuilder(args);
 
 const string MyCorsPolicy = "MyCorsPolicy";
 
+// CORS
 builder.Services.AddCors(options =>
 {
     options.AddPolicy(MyCorsPolicy, corsBuilder =>
     {
         corsBuilder
-            .WithOrigins(builder.Configuration["Config:OriginCors"]!) // ej: "https://midominio.com"
+            .WithOrigins(builder.Configuration["Config:OriginCors"]!) // ej: "http://localhost:60468/"
             .AllowAnyHeader()
             .AllowAnyMethod();
         // .AllowCredentials(); // solo si lo necesitas
     });
 });
 
-
-
 builder.Services.AddControllers();
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
+
+// OpenAPI (.NET 9)
 builder.Services.AddOpenApi();
 
-
-
-//Metodos para implementar inyeccion de dependencias de los proyectos
+// Servicios de dominio / infra / aplicación
 builder.Services.AddDomainServices();
 builder.Services.AddInfrastructureServices();
 builder.Services.AddApplicationServices();
 
-//Agregamos el metodo extension para seguridad
+// Logging transversal (Serilog + MSSQL + File + Console)
+builder.Services.AddTransversalCollection(builder.Configuration);
+
+// Host usa Serilog
+builder.Host.UseSerilog();
+
+// Seguridad / JWT
 builder.Services.AddAuth(builder.Configuration);
 
+// Swagger (config de módulos)
 builder.Services.AddSwagger();
-
-
 
 var app = builder.Build();
 
+// Variable de ayuda para entorno
+var isDevOrDocker =
+    app.Environment.IsDevelopment() ||
+    string.Equals(app.Environment.EnvironmentName, "Docker", StringComparison.OrdinalIgnoreCase);
 
-
-
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+// Swagger en Development **y** Docker
+if (isDevOrDocker)
 {
-    // Generar documentación JSON de Swagger
     app.UseSwagger();
 
-    // Habilitar interfaz interactiva de usuario de Swagger
-    app.UseSwaggerUI(c => {
+    app.UseSwaggerUI(c =>
+    {
         c.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");
-        c.RoutePrefix = "swagger";
+        c.RoutePrefix = "swagger"; // UI => /swagger
         c.DisplayRequestDuration();
         c.EnableDeepLinking();
         c.ShowExtensions();
     });
-    
 }
 
-app.UseHttpsRedirection();
+// Middleware de logging de Serilog
+app.UseSerilogRequestLogging();
 
-app.UseCors(MyCorsPolicy); // ⬅️ Politica de cors
+// HTTPS solo fuera de Docker (para evitar el warning de puerto https)
+if (!string.Equals(app.Environment.EnvironmentName, "Docker", StringComparison.OrdinalIgnoreCase))
+{
+    app.UseHttpsRedirection();
+}
 
+app.UseCors(MyCorsPolicy);
 
-// Agregamos el middleware de autenticación
+// Autenticación / Autorización
 app.UseAuthentication();
-
-
 app.UseAuthorization();
 
 app.MapControllers();
 
-app.Run();
+// Bloque de control de errores + arranque
+try
+{
+    Log.Information("Starting Application API");
+    app.Run();
+}
+catch (Exception ex)
+{
+    Log.Fatal(ex, "Application terminated unexpectedly");
+}
+finally
+{
+    Log.CloseAndFlush();
+}
