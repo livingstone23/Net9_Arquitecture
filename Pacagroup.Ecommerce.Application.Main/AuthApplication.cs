@@ -74,6 +74,7 @@ public class AuthApplication : IAuthApplication
         var response = new Response<bool>();
         try
         {
+
             var existingUser = await _usersDomain.GetByEmailAsync(signUpDto.Email);
             if (existingUser != null)
             {
