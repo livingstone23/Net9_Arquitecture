@@ -7,11 +7,13 @@ using System.Net;
 using Microsoft.AspNetCore.Authorization;
 
 
-namespace Pacagroup.Ecommerce.Services.WebApi.Controllers;
+namespace Pacagroup.Ecommerce.Services.WebApi.Controllers.v1;
 
 
 //[Authorize]
-[Route("api/[controller]")]
+[ApiExplorerSettings(GroupName = "v1")]
+[ApiVersion("1.0", Deprecated = true)]
+[Route("api/v{version:apiVersion}/[controller]")]
 [ApiController]
 [SwaggerTag("Operaciones relacionadas con Clientes")]
 public class CustomersController : ControllerBase

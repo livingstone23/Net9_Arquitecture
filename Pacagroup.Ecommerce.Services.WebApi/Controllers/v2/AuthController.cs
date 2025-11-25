@@ -7,11 +7,13 @@ using Swashbuckle.AspNetCore.Annotations;
 
 
 
-namespace Pacagroup.Ecommerce.Services.WebApi.Controllers;
+namespace Pacagroup.Ecommerce.Services.WebApi.Controllers.v2;
 
 
 //[Authorize]
-[Route("api/[controller]")]
+[ApiExplorerSettings(GroupName = "v2")]
+[ApiVersion("2.0")]
+[Route("api/v{version:apiVersion}/[controller]")]
 [ApiController]
 [SwaggerTag("Operaciones de Autenticación")]
 public class AuthController : ControllerBase
