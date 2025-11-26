@@ -143,5 +143,19 @@ public class CustomersController : ControllerBase
 
 
 
+    [HttpGet("GetAllWithPaginationAsync")]
+    [SwaggerOperation(
+        Summary = "Lista Clientes con paginación",
+        Description = "Retorna un objeto generico con el resultado de la operación")]
+    [SwaggerResponse(200, "Clientes encontrados con paginación", typeof(ResponsePagination<IEnumerable<CustomerDto>>))]
+    public async Task<IActionResult> GetAllWithPaginationAsync([FromQuery] int pageNumber, int pageSize)
+    {
+        var response = await _customersApplication.GetAllWithPaginationAsync(pageNumber, pageSize);
+        if (response.IsSuccess)
+            return Ok(response);
+
+        return BadRequest(response.Message);
+    }
+
 }
 

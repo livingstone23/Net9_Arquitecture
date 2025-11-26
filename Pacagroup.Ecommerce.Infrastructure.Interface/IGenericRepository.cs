@@ -18,4 +18,9 @@ public interface IGenericRepository<T> where T : class
     Task<T?> GetAsync(string customerId);
     Task<IEnumerable<T>> GetAllAsync();
 
+
+    //Metodos de la paginacion
+    Task<IEnumerable<T>> GetAllWithPaginationAsync(int pageNumber, int pageSize);
+    Task<int> CountAsync();
+
 }

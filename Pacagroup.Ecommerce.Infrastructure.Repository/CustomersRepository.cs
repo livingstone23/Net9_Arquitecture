@@ -147,4 +147,41 @@ public class CustomersRepository : ICustomersRepository
     }
 
 
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="pageNumber"></param>
+    /// <param name="pageSize"></param>
+    /// <returns></returns>
+    /// <exception cref="NotImplementedException"></exception>
+    public async Task<IEnumerable<Customer>> GetAllWithPaginationAsync(int pageNumber, int pageSize)
+    {
+        using var connection = _context.CreateConnection();
+        var query = "CustomersListWithPagination";
+        var parameters = new DynamicParameters();
+        parameters.Add("PageNumber", pageNumber);
+        parameters.Add("PageSize", pageSize);
+
+        var customers = await connection.QueryAsync<Customer>(query, param: parameters, commandType: CommandType.StoredProcedure);
+        return customers;
+    }
+
+
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <returns></returns>
+    /// <exception cref="NotImplementedException"></exception>
+    public async Task<int> CountAsync()
+    {
+        using var connection = _context.CreateConnection();
+        var query = "Select Count(*) from Customers";
+
+        var count = await connection.ExecuteScalarAsync<int>(query, commandType: CommandType.Text);
+        return count;
+    }
+
+
 }

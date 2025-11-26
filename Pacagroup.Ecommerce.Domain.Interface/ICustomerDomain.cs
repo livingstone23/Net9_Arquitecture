@@ -17,4 +17,8 @@ public interface ICustomersDomain
     Task<Customer> GetAsync(string customerId);
     Task<IEnumerable<Customer>> GetAllAsync();
 
+
+    Task<IEnumerable<Customer>> GetAllWithPaginationAsync(int pageNumber, int pageSize);
+    Task<int> CountAsync();
+
 }

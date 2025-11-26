@@ -149,5 +149,29 @@ public class CustomersApplication : ICustomersApplication
         return response;
     }
 
+    public async Task<ResponsePagination<IEnumerable<CustomerDto>>> GetAllWithPaginationAsync(int pageNumber, int pageSize)
+    {
+        var response = new ResponsePagination<IEnumerable<CustomerDto>>();
+        try
+        {
+            var count = await _customersDomain.CountAsync();
 
+            var customers = await _customersDomain.GetAllWithPaginationAsync(pageNumber, pageSize);
+            response.Data = _mapper.Map<IEnumerable<CustomerDto>>(customers);
+
+            if (response.Data != null)
+            {
+                response.PageNumber = pageNumber;
+                response.TotalPages = (int)Math.Ceiling(count / (double)pageSize);
+                response.TotalCount = count;
+                response.IsSuccess = true;
+                response.Message = "Consulta Paginada Exitosa!!!";
+            }
+        }
+        catch (Exception ex)
+        {
+            response.Message = ex.Message;
+        }
+        return response;
+    }
 }

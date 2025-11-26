@@ -1,4 +1,5 @@
-﻿using FluentValidation.Results;
+﻿
+
 
 namespace Pacagroup.Ecommerce.Tranversal.Common;
 
@@ -8,15 +9,8 @@ namespace Pacagroup.Ecommerce.Tranversal.Common;
 /// Clase genérica para las respuestas
 /// </summary>
 /// <typeparam name="T"></typeparam>
-public class Response<T>
+public class Response<T>: ResponseGeneric<T>
 {
     
-    public T Data { get; set; }
-    
-    public bool IsSuccess { get; set; }
-
-    public string Message { get; set; }
-
-    public IEnumerable<ValidationFailure> Errors { get; set; }
 
 }

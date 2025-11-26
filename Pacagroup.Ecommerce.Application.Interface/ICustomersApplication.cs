@@ -20,4 +20,6 @@ public interface ICustomersApplication
     Task<Response<CustomerDto>> GetAsync(string customerId);
     Task<Response<IEnumerable<CustomerDto>>> GetAllAsync();
 
+    Task<ResponsePagination<IEnumerable<CustomerDto>>> GetAllWithPaginationAsync(int pageNumber, int pageSize);
+
 }

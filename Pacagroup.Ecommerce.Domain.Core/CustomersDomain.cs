@@ -39,6 +39,8 @@ public class CustomersDomain : ICustomersDomain
         return await _unitOfWork.Customers.GetAllAsync();
     }
 
+   
+
     public async Task<Customer> GetAsync(string customerId)
     {
         return await _unitOfWork.Customers.GetAsync(customerId);
@@ -55,4 +57,13 @@ public class CustomersDomain : ICustomersDomain
     }
 
 
+    public async Task<IEnumerable<Customer>> GetAllWithPaginationAsync(int pageNumber, int pageSize)
+    {
+        return await _unitOfWork.Customers.GetAllWithPaginationAsync(pageNumber, pageSize);
+    }
+
+    public async Task<int> CountAsync()
+    {
+        return await _unitOfWork.Customers.CountAsync();
+    }
 }
