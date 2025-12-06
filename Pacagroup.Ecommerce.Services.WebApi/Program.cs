@@ -4,11 +4,7 @@ using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Pacagroup.Ecommerce.Application.Main;
 using Pacagroup.Ecommerce.Domain.Core;
 using Pacagroup.Ecommerce.Infrastructure.Repository;
-using Pacagroup.Ecommerce.Services.WebApi.Modules.Authentication;
-using Pacagroup.Ecommerce.Services.WebApi.Modules.HealthCheck;
-using Pacagroup.Ecommerce.Services.WebApi.Modules.Swagger;
-using Pacagroup.Ecommerce.Services.WebApi.Validator;
-using Pacagroup.Ecommerce.Services.WebApi.Versioning;
+using Pacagroup.Ecommerce.Services.WebApi.Modules;
 using Pacagroup.Ecommerce.Tranversal.Logging;
 using Serilog;
 
@@ -62,6 +58,10 @@ builder.Services.AddSwagger();
 
 // ✅ Health Checks (tu extensión)
 builder.Services.AddHealthCheck(builder.Configuration);
+
+
+// Habilitamos Redis Cache
+builder.Services.AddRedisCache(builder.Configuration);
 
 
 // Habilito el llamado al fluent validation
@@ -132,6 +132,10 @@ if (!string.Equals(app.Environment.EnvironmentName, "Docker", StringComparison.O
 
 app.UseCors(MyCorsPolicy);
 
+
+// Necesario para routing con Reddis y HealthChecks UI
+app.UseRouting();
+
 // Autenticación / Autorización
 app.UseAuthentication();
 
@@ -139,15 +143,26 @@ app.UseAuthentication();
 
 app.UseAuthorization();
 
+
+//Necesario para HealthChecks con Reddis y HealthChecks UI
+app.UseEndpoints(_ => { });
+
+
 app.MapControllers();
 
 // Health check simple (para probes de Kubernetes, Azure, etc.)
 // Endpoint de health para la API (solo checks con tag "database")
+//app.MapHealthChecks("/health", new HealthCheckOptions
+//{
+//    Predicate = reg => reg.Tags.Contains("database"),
+//    ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+//});
 app.MapHealthChecks("/health", new HealthCheckOptions
 {
-    Predicate = reg => reg.Tags.Contains("database"),
+    Predicate = _ => true,
     ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
 });
+
 
 // UI de HealthChecks
 app.MapHealthChecksUI(options =>

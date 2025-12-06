@@ -2,7 +2,7 @@
 
 
 
-namespace Pacagroup.Ecommerce.Services.WebApi.Validator;
+namespace Pacagroup.Ecommerce.Services.WebApi.Modules;
 
 
 

@@ -7,6 +7,7 @@ using Pacagroup.Ecommerce.Domain.Entity;
 namespace Pacagroup.Ecommerce.Application.Main.Commons;
 
 
+
 /// <summary>
 /// Clase que permite configurar los mapeos entre entidades y DTOs utilizando AutoMapper
 /// </summary>
@@ -31,6 +32,8 @@ public class MappingsProfile : Profile
 
 
         CreateMap<User, SignUpDto>().ReverseMap();
+
+        CreateMap<Categories, CategoriesDto>().ReverseMap();
 
 
     }

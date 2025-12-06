@@ -23,7 +23,7 @@ public static class ConfigureServices
     {
 
         services.AddScoped<ICustomersApplication, CustomersApplication>();
-
+        services.AddScoped<ICategoriesApplication, CategoriesApplication>();
         services.AddScoped<IAuthApplication, AuthApplication>();
         services.AddScoped<IJwtService, JwtService>();
 

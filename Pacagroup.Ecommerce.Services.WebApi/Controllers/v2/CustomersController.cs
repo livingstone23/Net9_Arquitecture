@@ -4,7 +4,6 @@ using Pacagroup.Ecommerce.Application.Interface;
 using Pacagroup.Ecommerce.Tranversal.Common;
 using Swashbuckle.AspNetCore.Annotations;
 using System.Net;
-using Microsoft.AspNetCore.Authorization;
 
 
 
@@ -17,7 +16,7 @@ namespace Pacagroup.Ecommerce.Services.WebApi.Controllers.v2;
 [ApiVersion("2.0")]
 [Route("api/v{version:apiVersion}/[controller]")]
 [ApiController]
-[SwaggerTag("Operaciones relacionadas con Clientes")]
+
 public class CustomersController : ControllerBase
 {
     

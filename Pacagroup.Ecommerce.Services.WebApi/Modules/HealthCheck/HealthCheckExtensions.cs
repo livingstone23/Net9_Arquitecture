@@ -1,7 +1,7 @@
 ﻿
 
 
-namespace Pacagroup.Ecommerce.Services.WebApi.Modules.HealthCheck;
+namespace Pacagroup.Ecommerce.Services.WebApi.Modules;
 
 
 
@@ -19,7 +19,12 @@ public static class HealthCheckExtensions
                 configuration.GetConnectionString("NorthwindConnection"),
                 name: "SQL Server",
                 tags: new[] { "database" }
-            );
+
+
+            )
+            .AddRedis(configuration.GetConnectionString("RedisConnection"), tags: new[] { "cache" })
+
+            .AddCheck<HealthCheckCustom>("HealthCheckCustom", tags: new[] { "custom" }); 
 
         // UI que consulta el endpoint cada 5 segundos
         services.AddHealthChecksUI(setup =>

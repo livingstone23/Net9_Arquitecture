@@ -4,7 +4,7 @@ using Microsoft.IdentityModel.Tokens;
 
 
 
-namespace Pacagroup.Ecommerce.Services.WebApi.Modules.Authentication;
+namespace Pacagroup.Ecommerce.Services.WebApi.Modules;
 
 
 

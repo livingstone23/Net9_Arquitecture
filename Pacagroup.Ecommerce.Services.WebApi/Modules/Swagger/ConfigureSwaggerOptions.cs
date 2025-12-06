@@ -5,7 +5,7 @@ using Swashbuckle.AspNetCore.SwaggerGen;
 
 
 
-namespace Pacagroup.Ecommerce.Services.WebApi.Modules.Swagger;
+namespace Pacagroup.Ecommerce.Services.WebApi.Modules;
 
 
 

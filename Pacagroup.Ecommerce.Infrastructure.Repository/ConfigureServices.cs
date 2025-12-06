@@ -22,6 +22,7 @@ public static class ConfigureServices
 
         services.AddSingleton<DapperContext>();
         services.AddScoped<ICustomersRepository, CustomersRepository>();
+        services.AddScoped<ICategoriesRepository, CategoriesRepository>();
         
         services.AddScoped<IUnitOfWork, UnitOfWork>();
 

@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc.Versioning;
 
 
 
-namespace Pacagroup.Ecommerce.Services.WebApi.Versioning;
+namespace Pacagroup.Ecommerce.Services.WebApi.Modules;
 
 
 
