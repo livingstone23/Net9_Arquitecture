@@ -152,11 +152,6 @@ app.MapControllers();
 
 // Health check simple (para probes de Kubernetes, Azure, etc.)
 // Endpoint de health para la API (solo checks con tag "database")
-//app.MapHealthChecks("/health", new HealthCheckOptions
-//{
-//    Predicate = reg => reg.Tags.Contains("database"),
-//    ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
-//});
 app.MapHealthChecks("/health", new HealthCheckOptions
 {
     Predicate = _ => true,

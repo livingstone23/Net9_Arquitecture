@@ -24,7 +24,7 @@ public static class VersioningExtensions
             //Para versionar utilizando la URL Punto01
             //options.ApiVersionReader = new QueryStringApiVersionReader("api-version");
             //Para versionar utilizando encabezado Punto02
-            options.ApiVersionReader = new HeaderApiVersionReader("x-version");
+            //options.ApiVersionReader = new HeaderApiVersionReader("x-version");
             //Parar versionar utilizando el segmento en la url Punto03
             //options.ApiVersionReader = new UrlSegmentApiVersionReader();
 
